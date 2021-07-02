@@ -3,11 +3,17 @@
       <div>
           <Flash/>
       </div>
-      <div>
-          <img :src="'/storage/images/hero.png'">
+      <div v-if="isAdmin"><h3>Only for admin</h3></div>
+      <div v-for="(user , index) in users" :key="index">
+          <div v-if="user.can.viewany">
+              {{user.fname}}
+
+          </div>
+
       </div>
-     <input type="text" name="name" id="" v-model="form.name">
-     <button type="submit" @click="submit"> Create Song</button>
+    
+      
+   
   </div>
 </template>
 
@@ -18,6 +24,10 @@ export default {
     components:{
         Flash
     },
+    props:{
+        users:Array,
+        isAdmin:Boolean
+    },
    
     data() {
         return {
@@ -26,11 +36,7 @@ export default {
             })
         }
     },
-    methods: {
-        submit(){
-            this.form.post(this.route('song.store'))
-        }
-    },
+  
 
 }
 </script>

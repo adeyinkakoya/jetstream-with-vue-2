@@ -1,11 +1,14 @@
 <?php
 
+use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\SongController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +41,27 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::get('song/create', [SongController::class, "create"])->name('song.create');
-Route::post('song/create', [SongController::class, "store"])->name('song.store');
+Route::get('song/create', [SongController::class, "create"])->name('song.create')->middleware('guest');
+Route::post('song', [SongController::class, "store"])->name('song.store')->middleware('guest');
+
+Route::get('test', function(){
+   
+   return Str::of('adeyinka Ogunkoya')->slug('-');
+
+    //dd(User::count());
+});
+
+
+Route::group(['middleware'=>'auth'], function() {
+    
+   // I dont need profile/{user}/edit becuase the user is already automtically being passed to the app 
+   //Route::get('profile/{user}/edit', UserController::class , "edit");
+   //Route::get('profile/edit', [UserController::class , 'edit'])->name('profile.edit');
+
+
+    // route directly to an inertia component/page
+   Route::inertia('profile/update','Profile/UpdateProfileInformationForm')->name('profile.update');
+   Route::get('users/index',[UserController::class ,'index'])->name('users.index');
+
+    
+});

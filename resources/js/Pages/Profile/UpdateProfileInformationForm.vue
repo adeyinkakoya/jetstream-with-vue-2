@@ -1,12 +1,6 @@
 <template>
     <jet-form-section @submitted="updateProfileInformation">
-        <template #title>
-            Profile Information
-        </template>
-
-        <template #description>
-            Update your account's profile information and email address.
-        </template>
+        
 
         <template #form>
             <!-- Profile Photo -->
@@ -41,11 +35,17 @@
                 <jet-input-error :message="form.errors.photo" class="mt-2" />
             </div>
 
-            <!-- Name -->
+            <!-- First Name -->
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="name" value="Name" />
-                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" autocomplete="name" />
-                <jet-input-error :message="form.errors.name" class="mt-2" />
+                <jet-label for="first_name" value="First Name" />
+                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.first_name" autocomplete="first_name" />
+                <jet-input-error :message="form.errors.first_name" class="mt-2" />
+            </div>
+             <!-- Last Name -->
+             <div class="col-span-6 sm:col-span-4">
+                <jet-label for="last_name" value="Last Name" />
+                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.last_name" autocomplete="last_name" />
+                <jet-input-error :message="form.errors.last_name" class="mt-2" />
             </div>
 
             <!-- Email -->
@@ -78,6 +78,10 @@
     import JetSecondaryButton from '@/Jetstream/SecondaryButton'
 
     export default {
+        metaInfo:{
+            title:"Update Profile : "
+        },
+        layout:"dashboard-layout",
         components: {
             JetActionMessage,
             JetButton,
@@ -94,7 +98,9 @@
             return {
                 form: this.$inertia.form({
                     _method: 'PUT',
-                    name: this.user.name,
+                    first_name: this.user.first_name,
+                    last_name:this.user.last_name,
+                    gender:this.user.gender,
                     email: this.user.email,
                     photo: null,
                 }),

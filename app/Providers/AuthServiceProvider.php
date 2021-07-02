@@ -15,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\User' => 'App\Policies\UserPolicy',
     ];
 
     /**
@@ -26,11 +27,24 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Checks for authenticated user in the backend.
-        Gate::define('auth user', function(User $user){
-            return $user ? true : false;
+
+        Gate::before(function (User $user, $ability) {
+            return $user->hasRole('super_admin') ? true : null;
         });
 
-        //
+        // Checks for authenticated user in the backend. Used to hide auth routes from guests in frontend
+        Gate::define('auth user', function(User $user){
+            return $user ? true : false; // Gate identifies $user as auth user so no need for auth()->user() or request()->user()
+        });
+
+         // isAdmin
+         Gate::define('isAdmin', function(User $user){
+            return $user->hasRole('admin') ? true : false; 
+        });
+
+        // isSuperAdmin
+        Gate::define('isSuperAdmin', function(User $user){
+            return $user->hasRole('super_admin') ? true : false; 
+        });
     }
 }

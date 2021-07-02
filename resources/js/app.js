@@ -35,11 +35,15 @@ Inertia.on('finish', (event) => {
     }
 })
 
-//Layout files
+
+// Layout files
 import AuthLayout from '@/Layouts/AuthLayout.vue'
+import DashboardLayout from '@/Layouts/DashboardLayout.vue'
+
 
 // Make it Global
 Vue.component('auth-layout', AuthLayout);
+Vue.component('dashboard-layout', DashboardLayout);
 
 
 

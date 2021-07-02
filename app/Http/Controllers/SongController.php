@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class SongController extends Controller
 {
     public function create(){
+        Inertia::share('nonsense', config('app.name'));
         return Inertia::render('Song/Create');
     }
 
