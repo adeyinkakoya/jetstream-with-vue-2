@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
+
 Route::get('song/create', [SongController::class, "create"])->name('song.create')->middleware('guest');
 Route::post('song', [SongController::class, "store"])->name('song.store')->middleware('guest');
 
@@ -60,8 +62,10 @@ Route::group(['middleware'=>'auth'], function() {
 
 
     // route directly to an inertia component/page
-   Route::inertia('profile/update','Profile/UpdateProfileInformationForm')->name('profile.update');
-   Route::get('users/index',[UserController::class ,'index'])->name('users.index');
+Route::inertia('profile/update','Profile/UpdateProfileInformationForm')->name('profile.update');
+
+Route::resource('users', UserController::class);
+
 
     
 });

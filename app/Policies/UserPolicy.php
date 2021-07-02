@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -18,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('admin') ? true : false;
+        //
     }
 
     /**
