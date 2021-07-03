@@ -61,13 +61,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-        'profile_photo_url',
+        'profile_photo_url','user_role'
     ];
 
-
+// Overwrite this method from the has profile photo class
     protected function defaultProfilePhotoUrl()
     {
         return $this->gender=="Mr" ? asset('storage/images/avatar_male.png') : asset('storage/images/avatar_female.png');
         
     }
+
+public function getUserRoleAttribute(){
+    return $this->getRoleNames();
+}   
 }

@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+
+   public function __construct()
+   {
+      $this->authorizeResource(User::class ,'users');
+   }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::select('first_name','last_name','email')->get();
+        return inertia('User/Index',[
+            'users'=>$users->map(function($user){
+                return [
+                    'fname'=>$user->first_name,
+                    'lname'=>$user->last_name,
+                    'email'=>$user->email
+                ];
+            })
+
+        ]);
     }
 
     /**
