@@ -50,17 +50,17 @@
                     </li>
 
                     <div class="side-nav__devider my-6"></div>
-                    <li>
+                    <li v-if="canViewAnyUser">
                         <inertia-link :href="route('users.index')" class="side-menu">
                             <div class="side-menu__icon"> <i data-feather="avatar"></i> </div>
                             <div class="side-menu__title"> Users </div>
                         </inertia-link>
                     </li>
                     <li>
-                        <a href="#" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="book"></i> </div>
+                      <inertia-link :href="route('posts.index')" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="avatar"></i> </div>
                             <div class="side-menu__title"> Posts </div>
-                        </a>
+                        </inertia-link>
                     </li>
                     
                   
@@ -71,6 +71,11 @@
 
 <script>
 export default {
+    computed: {
+        canViewAnyUser:function(){
+            return this.$page.props.user.permissions.user.viewany;
+        }
+    },
 
 }
 </script>

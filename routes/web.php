@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
-
+use anlutro\LaravelSettings\Facade as Setting;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,7 +66,13 @@ Route::group(['middleware'=>'auth'], function() {
 Route::inertia('profile/update','Profile/UpdateProfileInformationForm')->name('profile.update');
 
 Route::resource('users', UserController::class);
+Route::resource('posts', PostsController::class);
+    
+});
 
-
+Route::get('writesetting', function () {
+    
+    Setting::set('foo', 'bar');
+    Setting::save();
     
 });

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Post;
+use App\Policies\UserPolicy;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -61,8 +63,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-        'profile_photo_url','user_role'
+        'profile_photo_url','permissions'
     ];
+
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
 
 // Overwrite this method from the has profile photo class
     protected function defaultProfilePhotoUrl()
@@ -71,7 +78,17 @@ class User extends Authenticatable
         
     }
 
-public function getUserRoleAttribute(){
-    return $this->getRoleNames();
-}   
+// public function getUserRoleAttribute(){
+//     return $this->getRoleNames();
+// }   
+
+
+public function getPermissionsAttribute(){
+    return [
+        'user'=>[
+            'viewany'=>$this->can('viewAny',$this),
+            'create'=>$this->can('create',$this)
+        ]
+        ];
+}  
 }

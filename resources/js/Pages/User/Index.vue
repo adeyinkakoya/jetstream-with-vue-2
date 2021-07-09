@@ -5,6 +5,7 @@
       </div>
     
       <vue-good-table
+     
       :columns="columns"
       :rows="rows"
       :line-numbers="true"
@@ -83,7 +84,7 @@ export default {
     },
   methods: {
       rowStyleClassFn(row) {
-    return row.email =="adeyinkakoya@gmail.com" ? 'tyv' : 'red';
+    return row.email =="adeyinkakoya@gmail.com" ? 'bluecolor' : '';
   },
   },
 
@@ -92,10 +93,11 @@ export default {
 
 <style >
 
-.tyv {
-    font-weight: bold;
-    color: blue;
-    font-style: italic;
+table.vgt-table {
+	font-size: 14px;
+	border-collapse: collapse;
 }
+
+
 
 </style>
